@@ -1,0 +1,35 @@
+import random
+
+def prisoners_game(n):
+    boxes = list(range(1, n + 1))
+    random.shuffle(boxes)
+
+    for prisoner in range(1, n + 1):
+        current_box = prisoner
+        found = False
+
+        for _ in range(n // 2):
+            number_inside = boxes[current_box - 1]
+            if number_inside == prisoner:
+                found = True
+                break
+            current_box = number_inside
+
+        if not found:
+            return False  # проигрыш
+
+    return True  # все спасены
+
+
+# ====== ЗАПУСК ======
+n = int(input("Введи количество заключённых (например 50): "))
+
+wins = 0
+tries = 1000
+
+for _ in range(tries):
+    if prisoners_game(n):
+        wins += 1
+
+print(f"\nУспешных попыток: {wins} из {tries}")
+print(f"Вероятность успеха: {wins / tries * 100:.2f}%")
