@@ -1,0 +1,25 @@
+import random
+
+n = int(input("Количество заключённых и коробок: "))
+boxes = list(range(1, n + 1))
+random.shuffle(boxes)
+
+prisoner = int(input(f"Ты заключённый № (1–{n}): "))
+
+attempts = n // 2
+current = prisoner
+
+print("\nНачинаем поиск...\n")
+
+for step in range(attempts):
+    print(f"Шаг {step + 1}: открываешь коробку {current}")
+    found = boxes[current - 1]
+    print(f"Внутри номер: {found}\n")
+
+    if found == prisoner:
+        print("🎉 Ты нашёл свой номер! Спасён!")
+        break
+
+    current = found
+else:
+    print("❌ Ты не успел найти свой номер.")
