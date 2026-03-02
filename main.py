@@ -245,3 +245,16 @@ Grey_4_label3.place(x=5, y=85)
 
 
 root.mainloop()
+
+
+
+
+
+
+
+
+
+
+
+
+
