@@ -36,3 +36,34 @@ if alive:
     print("Все заключенные выжили!")
 else:
     print("Все заключенные погибли.")
+import random
+
+success = True
+
+for prisoner in range(1, 101):
+
+    boxes = list(range(1, 101))
+    random.shuffle(boxes)
+
+    attempts = 0
+    found = False
+
+    while attempts < 50:
+        choice = random.randint(0, 99)
+
+        if boxes[choice] == prisoner:
+            print(f"Заключенный {prisoner} нашел свой номер!")
+            found = True
+            break
+
+        attempts += 1
+
+    if not found:
+        print(f"Заключенный {prisoner} проиграл. Все погибли.")
+        success = False
+        break
+
+if success:
+    print("Все заключенные спаслись!")
+else:
+    print("Игра окончена.")
