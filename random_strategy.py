@@ -62,6 +62,46 @@ for prisoner in range(1, 101):
         print(f"Заключенный {prisoner} проиграл. Все погибли.")
         success = False
         break
+import random
+
+boxes = list(range(1, 101))
+random.shuffle(boxes)
+
+def prisoner_turn(prisoner):
+    opened = 0
+    checked = []
+
+    while opened < 50:
+        box = random.randint(1, 100)
+
+        if box not in checked:
+            checked.append(box)
+            opened += 1
+
+            if boxes[box - 1] == prisoner:
+                return True
+
+    return False
+
+
+all_win = True
+
+for prisoner in range(1, 101):
+
+    result = prisoner_turn(prisoner)
+
+    if result:
+        print(f"Заключенный {prisoner} нашел свой номер")
+    else:
+        print(f"Заключенный {prisoner} проиграл")
+        all_win = False
+        break
+
+
+if all_win:
+    print("Все заключенные выжили!")
+else:
+    print("Все заключенные погибли.")
 
 if success:
     print("Все заключенные спаслись!")
