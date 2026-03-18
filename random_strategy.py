@@ -107,3 +107,38 @@ if success:
     print("Все заключенные спаслись!")
 else:
     print("Игра окончена.")
+import random
+
+boxes = list(range(1, 101))
+random.shuffle(boxes)
+
+success_count = 0
+
+for prisoner in range(1, 101):
+
+    attempts = 0
+    opened = set()
+
+    while attempts < 50:
+
+        box = random.randint(1, 100)
+
+        if box not in opened:
+            opened.add(box)
+            attempts += 1
+
+            if boxes[box - 1] == prisoner:
+                success_count += 1
+                print(f"Заключенный {prisoner} нашел номер")
+                break
+
+    else:
+        print(f"Заключенный {prisoner} проиграл")
+        break
+
+print(f"Всего успешно: {success_count} из 100")
+
+if success_count == 100:
+    print("Все выжили!")
+else:
+    print("Все погибли.")
