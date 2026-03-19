@@ -142,3 +142,50 @@ if success_count == 100:
     print("Все выжили!")
 else:
     print("Все погибли.")
+import random
+
+boxes = list(range(1, 101))
+random.shuffle(boxes)
+
+def smart_strategy(prisoner):
+    box = prisoner
+    for _ in range(50):
+        number = boxes[box - 1]
+        if number == prisoner:
+            return True
+        box = number
+    return False
+
+def random_strategy(prisoner):
+    opened = set()
+    while len(opened) < 50:
+        choice = random.randint(1, 100)
+        if choice not in opened:
+            opened.add(choice)
+            if boxes[choice - 1] == prisoner:
+                return True
+    return False
+
+
+alive = True
+
+for prisoner in range(1, 101):
+
+    if prisoner <= 50:
+        result = smart_strategy(prisoner)
+        strategy = "умная"
+    else:
+        result = random_strategy(prisoner)
+        strategy = "случайная"
+
+    if result:
+        print(f"Заключенный {prisoner} ({strategy}) нашел номер")
+    else:
+        print(f"Заключенный {prisoner} ({strategy}) проиграл. Все погибли.")
+        alive = False
+        break
+
+if alive:
+    print("Все выжили!")
+else:
+    print("Игра окончена.")
