@@ -189,3 +189,44 @@ if alive:
     print("Все выжили!")
 else:
     print("Игра окончена.")
+import random
+
+boxes = list(range(1, 101))
+random.shuffle(boxes)
+
+all_alive = True
+
+for prisoner in range(1, 101):
+
+    # подсказка — случайная коробка
+    hint_box = random.randint(1, 100)
+
+    opened = {hint_box}
+    found = False
+
+    # сначала проверяет подсказку
+    if boxes[hint_box - 1] == prisoner:
+        print(f"Заключенный {prisoner} нашел номер сразу по подсказке!")
+        continue
+
+    # дальше обычные попытки
+    while len(opened) < 50:
+        box = random.randint(1, 100)
+
+        if box not in opened:
+            opened.add(box)
+
+            if boxes[box - 1] == prisoner:
+                print(f"Заключенный {prisoner} нашел номер")
+                found = True
+                break
+
+    if not found:
+        print(f"Заключенный {prisoner} проиграл. Все погибли.")
+        all_alive = False
+        break
+
+if all_alive:
+    print("Все выжили!")
+else:
+    print("Игра окончена.")
