@@ -54,7 +54,7 @@ class PrisonGame:
 
     def open_box(self, index):
         if self.attempts >= self.max_attempts:
-            messagebox.showinfo("Результат", "лох")
+            messagebox.showinfo("Результат", "не нашел")
             self.disable_all_buttons()
             return
 
