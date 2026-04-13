@@ -1,31 +1,53 @@
+import pandas as pd
 import random
 
-boxes = list(range(1, 101))
-random.shuffle(boxes)
+# ---- История игры ----
+data = {
+    "Раунд": [],
+    "Игрок": [],
+    "Очки": [],
+    "Победа": []
+}
 
-game_over = False
+players = ["Игрок 1", "Игрок 2"]
 
-for prisoner in range(1, 101):
+# создаём 10 раундов игры
+for i in range(1, 11):
+    score1 = random.randint(0, 100)
+    score2 = random.randint(0, 100)
 
-    choices = list(range(1, 101))
-    random.shuffle(choices)
+    winner1 = "Да" if score1 > score2 else "Нет"
+    winner2 = "Да" if score2 > score1 else "Нет"
 
-    found = False
+    data["Раунд"].append(i)
+    data["Игрок"].append(players[0])
+    data["Очки"].append(score1)
+    data["Победа"].append(winner1)
 
-    for i in range(50):
-        box = choices[i]
+    data["Раунд"].append(i)
+    data["Игрок"].append(players[1])
+    data["Очки"].append(score2)
+    data["Победа"].append(winner2)
 
-        if boxes[box - 1] == prisoner:
-            print(f"Заключенный {prisoner} нашел свой номер в коробке {box}")
-            found = True
-            break
+# создаём таблицу
+df = pd.DataFrame(data)
 
-    if not found:
-        print(f"Заключенный {prisoner} не нашел свой номер. Все проиграли.")
-        game_over = True
-        break
+# ---- Вывод истории ----
+print("ИСТОРИЯ ИГРЫ:\n")
+print(df)
 
-if not game_over:
-    print("Все заключенные выжили!")
-else:
-    print("Игра закончилась поражением.")
+# ---- Статистика ----
+print("\nСТАТИСТИКА:\n")
+
+stats = df.groupby("Игрок").agg(
+    Всего_раундов=("Раунд", "count"),
+    Сумма_очков=("Очки", "sum"),
+    Средние_очки=("Очки", "mean"),
+    Побед=("Победа", lambda x: (x == "Да").sum())
+)
+
+print(stats)
+
+# ---- лучший игрок ----
+best_player = stats["Сумма_очков"].idxmax()
+print("\n🏆 Лучший игрок:", best_player)
